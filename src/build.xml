@@ -1,0 +1,46 @@
+
+<project name="My Weekend project" default="help" basedir=".">
+  <target name="help">
+    <echo>You can use the following target:</echo>
+    <echo> </echo>
+    <echo>  clean : Remove .class files </echo>
+    <echo>  compile : Compiles java files into class files</echo>
+    <echo>  unit.test : Run unit tests</echo>
+    <echo></echo>
+  </target>
+
+  <!-- Define the CLASSPATH -->
+  <path id="compile.classpath">
+    <fileset dir=".">
+      <include name="*.jar"/>
+    </fileset>
+    <pathelement location="."/>
+  </path>
+
+  <path id="unit.test.classpath">
+    <fileset dir=".">
+      <include name="*.jar"/>
+    </fileset>
+    <pathelement location="."/>
+  </path>
+
+  <target name="clean" description="remove class files">
+    <delete>
+      <fileset dir="." includes="*.class" />
+    </delete>
+  </target>
+
+  <target name="compile" depends="clean" description="Compile Java sources">
+    <javac srcdir="."
+          destdir=".">
+        <classpath refid="compile.classpath"/>
+    </javac>
+  </target>
+
+  <target name="unit.test" depends="compile">
+    <java classname="TestRunner">
+        <classpath refid="unit.test.classpath"/>
+    </java>
+  </target>
+
+</project> 
